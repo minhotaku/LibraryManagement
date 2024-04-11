@@ -291,6 +291,7 @@
             btnDelete.SizeMode = PictureBoxSizeMode.Zoom;
             btnDelete.TabIndex = 31;
             btnDelete.TabStop = false;
+            btnDelete.Click += btnDelete_Click;
             // 
             // label1
             // 

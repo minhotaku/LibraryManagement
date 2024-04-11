@@ -140,7 +140,7 @@ namespace LibraryManagement
         private void btnRecord_Click(object sender, EventArgs e)
         {
             CheckAndChangeOtherButtonColor(btnRecord);
-            addUserControl(new UC_Record(role_INT,account_id));
+            addUserControl(new UC_Record(role_INT, account_id));
         }
 
         private void panelMain_Paint(object sender, PaintEventArgs e)

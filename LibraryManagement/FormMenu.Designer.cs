@@ -262,6 +262,7 @@
             Controls.Add(panel2);
             FormBorderStyle = FormBorderStyle.FixedDialog;
             Name = "FormMenu";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "FormMenu";
             Load += FormMenu_Load;
             panel1.ResumeLayout(false);

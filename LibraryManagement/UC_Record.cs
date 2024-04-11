@@ -219,7 +219,6 @@ namespace LibraryManagement
                 {
                     DataGridViewRow row = dgvRecord.Rows[e.RowIndex];
 
-                    // Lấy giá trị của các ô trong dòng được chọn và gán vào các điều khiển TextBox và DateTimePicker tương ứng
                     txtBorrowID.Text = row.Cells["borrow_id"].Value.ToString();
                     txtBookID.Text = row.Cells["book_id"].Value.ToString();
                     txtTitle.Text = row.Cells["title"].Value.ToString();

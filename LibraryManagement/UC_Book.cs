@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32.SafeHandles;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -158,7 +159,7 @@ namespace LibraryManagement
             try
             {
                 string title = txtTitle.Text;
-                string authorName = cboxAuthor.SelectedItem?.ToString(); 
+                string authorName = cboxAuthor.SelectedItem?.ToString();
                 string genre = cboxGenre.SelectedItem?.ToString();
                 int year = int.Parse(txtYear.Text);
                 int pages = int.Parse(txtPages.Text);
@@ -339,6 +340,84 @@ namespace LibraryManagement
             catch (Exception ex)
             {
 
+            }
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                DialogResult result = MessageBox.Show("Are you sure you want to delete this book?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result != DialogResult.Yes) return;
+
+                if (string.IsNullOrEmpty(txtID.Text))
+                {
+                    MessageBox.Show("Please choose a book to delete", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                conn.Open();
+                string query = "DELETE FROM Books WHERE book_id = @Book_id";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@Book_id", Convert.ToInt32(txtID.Text));
+
+                int rowsAffected = cmd.ExecuteNonQuery();
+
+                if (rowsAffected > 0)
+                {
+                    MessageBox.Show("Book deleted successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Failed to delete book.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+                conn.Close();
+                display();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                conn.Close();
+            }
+        }
+
+        private void txtSearch_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                string searchTitle = txtSearch.Text.Trim();
+
+                conn.Open();
+                string query = @"SELECT 
+                            Books.book_id AS id,
+                            Books.title,
+                            Books.publisher,
+                            Books.quantity,
+                            Books.released_year AS year,
+                            Books.pages,
+                            Books.status,
+                            Books.genre,
+                            CONCAT(Authors.author_lname, ' ', Authors.author_fName) AS author_name
+                        FROM
+                            Books
+                        LEFT JOIN
+                            Authors ON Books.author_id = Authors.author_id
+                        WHERE
+                            Books.title LIKE @SearchTitle";
+
+                SqlDataAdapter adapter = new SqlDataAdapter(query, conn);
+                adapter.SelectCommand.Parameters.AddWithValue("@SearchTitle", "%" + searchTitle + "%");
+                DataTable dt = new DataTable();
+                adapter.Fill(dt);
+
+                dataGridView.DataSource = dt;
+
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
             }
         }
 

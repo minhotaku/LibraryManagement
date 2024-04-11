@@ -301,7 +301,7 @@
             btnDelete.TabIndex = 16;
             btnDelete.Text = "DELETE";
             btnDelete.UseVisualStyleBackColor = false;
-            btnDelete.Click += btnUpdate_Click;
+            btnDelete.Click += btnDelete_Click;
             // 
             // panelControl
             // 
@@ -332,6 +332,7 @@
             txtSearch.Name = "txtSearch";
             txtSearch.Size = new Size(253, 27);
             txtSearch.TabIndex = 18;
+            txtSearch.TextChanged += txtSearch_TextChanged;
             // 
             // UC_Book
             // 

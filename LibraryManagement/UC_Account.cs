@@ -265,19 +265,19 @@ namespace LibraryManagement
                 string role = cboxRole.Text;
                 bool active = checkBoxActive.Checked;
                 string password = txtPassword.Text;
-     
+
                 conn.Open();
                 String query = "SELECT COUNT(*) FROM Accounts WHERE email = @Email AND account_id != @ID";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@Email", email);
                 cmd.Parameters.AddWithValue("@ID", accountId);
                 int count = (int)cmd.ExecuteScalar();
-                if(count> 0)
+                if (count > 0)
                 {
-                    MessageBox.Show("Email is Exited","Error",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                    MessageBox.Show("Email is Exited", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
-                    query = @"UPDATE Accounts 
+                query = @"UPDATE Accounts 
                          SET first_name = @FirstName, 
                              last_name = @LastName, 
                              email = @Email, 
@@ -290,37 +290,76 @@ namespace LibraryManagement
                              password = @Password 
                          WHERE account_id = @AccountId";
 
-                    cmd = new SqlCommand(query, conn);
-                    cmd.Parameters.AddWithValue("@FirstName", firstName);
-                    cmd.Parameters.AddWithValue("@LastName", lastName);
-                    cmd.Parameters.AddWithValue("@Email", email);
-                    cmd.Parameters.AddWithValue("@Gender", gender);
-                    cmd.Parameters.AddWithValue("@Phone", phone);
-                    cmd.Parameters.AddWithValue("@DateOfBirth", dateOfBirth);
-                    cmd.Parameters.AddWithValue("@Address", address);
-                    cmd.Parameters.AddWithValue("@Role", role);
-                    cmd.Parameters.AddWithValue("@Active", active);
-                    cmd.Parameters.AddWithValue("@Password", password);
-                    cmd.Parameters.AddWithValue("@AccountId", accountId);
+                cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@FirstName", firstName);
+                cmd.Parameters.AddWithValue("@LastName", lastName);
+                cmd.Parameters.AddWithValue("@Email", email);
+                cmd.Parameters.AddWithValue("@Gender", gender);
+                cmd.Parameters.AddWithValue("@Phone", phone);
+                cmd.Parameters.AddWithValue("@DateOfBirth", dateOfBirth);
+                cmd.Parameters.AddWithValue("@Address", address);
+                cmd.Parameters.AddWithValue("@Role", role);
+                cmd.Parameters.AddWithValue("@Active", active);
+                cmd.Parameters.AddWithValue("@Password", password);
+                cmd.Parameters.AddWithValue("@AccountId", accountId);
 
-                    int rowsAffected = cmd.ExecuteNonQuery();
-                    if (rowsAffected > 0)
-                    {
-                        MessageBox.Show("Account updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                    else
-                    {
-                        MessageBox.Show("Failed to update account.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                    conn.Close();
-                    display();
-                }
-                catch (Exception ex)
+                int rowsAffected = cmd.ExecuteNonQuery();
+                if (rowsAffected > 0)
                 {
-                    MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Account updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
+                else
+                {
+                    MessageBox.Show("Failed to update account.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                conn.Close();
+                display();
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                DialogResult result = MessageBox.Show("Are you sure you want to delete this book?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result != DialogResult.Yes) return;
+
+                if (string.IsNullOrEmpty(txtID.Text))
+                {
+                    MessageBox.Show("Please choose an account to delete.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                conn.Open();
+                string query = "DELETE FROM Accounts WHERE account_id = @AccountID";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@AccountID", Convert.ToInt32(txtID.Text));
+
+                int rowsAffected = cmd.ExecuteNonQuery();
+
+                if (rowsAffected > 0)
+                {
+                    MessageBox.Show("Account deleted successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Failed to delete account.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+                conn.Close();
+                display(); 
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                conn.Close();
+            }
+        }
 
     }
 
- }
+}
