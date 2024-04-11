@@ -2,7 +2,7 @@ USE LibraryManagement;
 
 INSERT INTO Accounts (first_name, last_name, email, gender, phone, dateOfBirth, address, role, password) 
 VALUES 
-('Michael', 'Johnson', 'michael.johnson@example.com', 'M', '111222333', '1985-09-20', '789 Elm St, Village', 'user', 'pass123'),
+('Minh', 'Pham', 'minh@gmail.com', 'M', '111222333', '2000-09-20', 'Ha Noi', 'admin', 'pass123'),
 ('Emily', 'Brown', 'emily.brown@example.com', 'F', '444555666', '1991-04-12', '567 Pine St, Town', 'user', 'pass456'),
 ('David', 'Martinez', 'david.martinez@example.com', 'M', '777888999', '1978-12-05', '321 Cedar St, City', 'user', 'pass789'),
 ('Sarah', 'Wilson', 'sarah.wilson@example.com', 'F', '666777888', '1983-07-30', '987 Maple St, Village', 'user', 'pass101112'),
