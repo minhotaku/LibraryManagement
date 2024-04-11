@@ -43,10 +43,12 @@
             lbAccountName = new Label();
             lbRole = new Label();
             pictureBox1 = new PictureBox();
+            btnExit = new PictureBox();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)btnExit).BeginInit();
             SuspendLayout();
             // 
             // panel1
@@ -211,6 +213,7 @@
             // panel2
             // 
             panel2.BackColor = Color.Black;
+            panel2.Controls.Add(btnExit);
             panel2.Controls.Add(lbAccountName);
             panel2.Controls.Add(lbRole);
             panel2.Controls.Add(pictureBox1);
@@ -252,6 +255,17 @@
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
             // 
+            // btnExit
+            // 
+            btnExit.Image = (Image)resources.GetObject("btnExit.Image");
+            btnExit.Location = new Point(1355, 28);
+            btnExit.Name = "btnExit";
+            btnExit.Size = new Size(26, 28);
+            btnExit.SizeMode = PictureBoxSizeMode.Zoom;
+            btnExit.TabIndex = 19;
+            btnExit.TabStop = false;
+            btnExit.Click += btnExit_Click;
+            // 
             // FormMenu
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -270,6 +284,7 @@
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)btnExit).EndInit();
             ResumeLayout(false);
         }
 
@@ -289,5 +304,6 @@
         private Label lbRole;
         private PictureBox pictureBox1;
         private Button btnRecord;
+        private PictureBox btnExit;
     }
 }

@@ -25,6 +25,8 @@ namespace LibraryManagement
             this.account_name = account_name;
             this.formLogin = formLogin;
             this.account_id = account_id;
+
+            this.ControlBox = false; // Tat ControlBox
         }
 
         private void FormMenu_Load(object sender, EventArgs e)
@@ -146,6 +148,11 @@ namespace LibraryManagement
         private void panelMain_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

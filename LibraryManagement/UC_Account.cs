@@ -216,7 +216,6 @@ namespace LibraryManagement
                 return false;
             }
 
-            // Kiểm tra xem ngày sinh có hợp lệ không
             if (dobDateTimePicker.Value > DateTime.Now)
             {
                 MessageBox.Show("Invalid date of birth.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);

@@ -127,9 +127,6 @@ namespace LibraryManagement
             txtEmail.Text = string.Empty;
             txtPassword.Text = string.Empty;
         }
-
-
-
     }
 
 }

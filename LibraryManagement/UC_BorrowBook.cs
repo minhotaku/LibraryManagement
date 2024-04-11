@@ -37,25 +37,22 @@ namespace LibraryManagement
         {
             try
             {
-                // Kiểm tra xem TextBox có trống không
                 if (string.IsNullOrWhiteSpace(txtBookID.Text))
                 {
-                    ClearLabels(); // Xóa nội dung của các label nếu TextBox rỗng
+                    ClearLabels(); 
                     return;
                 }
 
                 int bookID;
-                // Kiểm tra xem TextBox có chứa giá trị số hay không
+          
                 if (!int.TryParse(txtBookID.Text, out bookID))
                 {
-                    ClearLabels(); // Xóa nội dung của các label nếu TextBox không chứa giá trị số
+                    ClearLabels(); 
                     return;
                 }
 
-                // Mở kết nối đến cơ sở dữ liệu
                 conn.Open();
 
-                // Truy vấn SQL để lấy thông tin sách cùng với tên tác giả từ bảng Books và Authors
                 string query = @"SELECT b.title, CONCAT(a.author_lname, ' ', a.author_fname) AS author_name, 
                                 b.quantity, b.status 
                          FROM Books b 
@@ -64,11 +61,9 @@ namespace LibraryManagement
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@BookID", bookID);
 
-                // Thực thi truy vấn và đọc dữ liệu
                 SqlDataReader reader = cmd.ExecuteReader();
                 if (reader.Read())
                 {
-                    // Hiển thị thông tin sách cùng với tên tác giả lên các label
                     lbBookID.Text = bookID.ToString();
                     lbTitle.Text = reader["title"].ToString();
                     lbAuthor.Text = reader["author_name"].ToString();
@@ -77,10 +72,9 @@ namespace LibraryManagement
                 }
                 else
                 {
-                    ClearLabels(); // Xóa nội dung của các label nếu không tìm thấy thông tin sách
+                    ClearLabels(); 
                 }
 
-                // Đóng kết nối
                 conn.Close();
             }
             catch (Exception ex)
@@ -89,7 +83,6 @@ namespace LibraryManagement
             }
         }
 
-        // Hàm để xóa nội dung của các label
         private void ClearLabels()
         {
             lbBookID.Text = "";
